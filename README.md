@@ -1,4 +1,4 @@
-Web Application Developed for the course of Advance Internet Technology
+Web Application developed for the course of Advance Internet Technology
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
