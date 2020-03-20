@@ -32,14 +32,15 @@ class Login extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    axios.post('http://localhost:4000/api/user/login', {email: this.state.email, password: this.state.password})
+    console.log(this.state);
+    axios.post('http://localhost:4000/user/login', {email: this.state.email, password: this.state.password})
     .then(res => {
       if('message' in res.data) {
         this.setState({error: res.data.message});
       } else { 
         console.log("GET res in login: " , res.data._id);
         this.props.history.push({
-          pathname:`/${res.data.userType}/profile/${res.data._id}`,
+          pathname:`/allreviews/${res.data._id}`,
           state: res.data
         });
       }
@@ -72,13 +73,10 @@ class Login extends React.Component {
                   </div>
                 </div>
                 <div className="footer">
-                <Button
-                  className="submit-btn"
-                  color="info"
-                >
+                <Button className="submit-btn">
                   Login
                 </Button><br/><br/>
-                <p>New to Novelish? <Link to="/register">Register</Link></p>
+                <p>New to Novelish? <Link to="/">Register</Link></p>
                 </div>
               </div>
             </form>

@@ -4,7 +4,6 @@ import { Link, withRouter } from "react-router-dom";
 import { Button } from "reactstrap";
 import loginImg from "../assets/img/logo.png"
 import "../assets/scss/signuplogin.scss";
-import history from "./history.js";
 import axios from 'axios';
 
 const initialState = {
@@ -66,7 +65,7 @@ class Signup extends React.Component {
         passwordMatchError = "Passwords do not match"
     }
       
-    if(this.state.age < 0 || this.state.age > 120) {
+    if(!this.state.age || this.state.age < 0 || this.state.age > 120) {
       ageError = "Invalid Age"
     } 
 
@@ -86,13 +85,13 @@ class Signup extends React.Component {
     if (isValid) {
       this.setState(initialState);
       // save the entry in database
-      axios.post('http://localhost:4000/api/user/signup', { first_name: this.state.first_name, 
+      axios.post('http://localhost:4000/user/signup', { first_name: this.state.first_name, 
         last_name: this.state.last_name, 
         email: this.state.email, 
         password: this.state.password,
       })
       .then((result) => {
-        history.push("/")
+        this.props.history.push("/login")
       });
     }
   };
@@ -123,7 +122,7 @@ class Signup extends React.Component {
                         <div style={{ fontSize: 12, color: "red" }}>{this.state.emailError}</div>
                     </div>
                     <div className="form-group">
-                      <input type="number" name="age" placeholder="Age" value={this.state.age} onChange={this.handleChange} min="0" max="120" />
+                      <input type="number" name="age" placeholder="Age" value={this.state.age} onChange={this.handleChange}  />
                       <div style={{ fontSize: 12, color: "red" }}>{this.state.ageError}</div>
                     </div>
                     <div className="form-group">
@@ -137,10 +136,7 @@ class Signup extends React.Component {
                   </div>
                 </div>
                 <div className="footer">
-                <Button
-                  className="submit-btn"
-                  color="info"
-                >
+                <Button className="submit-btn">
                   Register
                 </Button><br/><br/>
                 <p>Already have an account? <Link to="/login">Log in</Link></p>
