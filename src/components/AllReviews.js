@@ -65,7 +65,7 @@ class AllReviews extends React.Component {
               </Card>
             </Col>
           </Row>
-          <br/><br/>
+          <br/>
           <hr />
           <h6><Link {...this.props} to={`/myreviews/${userId}`}> View your reviews</Link></h6>
         </Container>

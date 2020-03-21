@@ -51,11 +51,31 @@ router.post('/login', (req, res) => {
     });
   } 
 }); 
-
+validate = (user) => {
+  if (!user.first_name) {
+    user.fnameError = "First Name cannot be blank";
+  }
+  if (!user.last_name) {
+    user.lnameError = "Last Name cannot be blank";
+  }
+  if (!user.email.includes("@") && !user.email.includes(".")) {
+    user.emailError = "Invalid Email";
+  }
+  if(user.password.length < 8) {
+      user.passwordLengthError = "Password should contain atleast 8 characters"
+  }
+  if(!(user.password === user.cnfpassword)) {
+      user.passwordMatchError = "Passwords do not match"
+  }
+  if(!user.age || user.age < 0 || user.age > 120) {
+    user.ageError = "Invalid Age"
+  }
+  return user;
+};
 // user signup api 
 router.post('/signup', (req, res, next) => { 
    
-// creating empty user object 
+  // creating empty user object 
   let newUser = new User(); 
 
   // initialize newUser object with request data
@@ -63,16 +83,27 @@ router.post('/signup', (req, res, next) => {
   newUser.last_name = req.body.last_name,
   newUser.email = req.body.email,
   newUser.age = req.body.age
-  
 
+  req.body.fnameError = "";
+  req.body.lnameError = "";
+  req.body.emailError = "";
+  req.body.ageError = "";
+  req.body.passwordLengthError = "";
+  req.body.passwordMatchError = "";
+  
   // call setPassword function to hash password 
   newUser.setPassword(req.body.password); 
 
-  // save newUser object to database 
-  User.create(newUser ,function(err, post) { 
-    if (err) return next(err); 
-    res.json(post);
-  }); 
+  // save newUser object to database if validated successfully
+  const user = validate(req.body);
+  if(!(user.fnameError || user.lnameError || user.emailError || user.ageError || user.passwordLengthError || user.passwordMatchError)) {
+    User.create(newUser ,function(err, post) { 
+      if (err) return next(err); 
+      res.json(post);
+    });
+  } else {
+    res.status(201).json(user);
+  }
 }); 
 
 

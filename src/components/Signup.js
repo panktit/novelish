@@ -37,63 +37,22 @@ class Signup extends React.Component {
         : event.target.value
     });
   };
-
-  validate = () => {
-    let emailError = "";
-    let fnameError = "";
-    let lnameError = "";
-    let passwordLengthError = "";
-    let passwordMatchError = "";
-    let ageError = "";
-    if (!this.state.first_name) {
-        fnameError = "First Name cannot be blank";
-    }
-
-    if (!this.state.last_name) {
-      lnameError = "Last Name cannot be blank";
-    }
-
-    if (!this.state.email.includes("@") && !this.state.email.includes(".")) {
-      emailError = "Invalid Email";
-    }
-
-    if(this.state.password.length < 8) {
-        passwordLengthError = "Password should contain atleast 8 characters"
-    }
-
-    if(!(this.state.password === this.state.cnfpassword)) {
-        passwordMatchError = "Passwords do not match"
-    }
-      
-    if(!this.state.age || this.state.age < 0 || this.state.age > 120) {
-      ageError = "Invalid Age"
-    } 
-
-    if (fnameError || lnameError || emailError || passwordLengthError || passwordMatchError || ageError) {
-      this.setState({ fnameError, lnameError, emailError, passwordLengthError, passwordMatchError, ageError });
-      return false;
-    }
-
-    return true;
-  };
-
  
   handleSubmit = event => {
     event.preventDefault();
     console.log(this.state);
-    const isValid = this.validate();
-    if (isValid) {
-      this.setState(initialState);
-      // save the entry in database
-      axios.post('http://localhost:4000/user/signup', { first_name: this.state.first_name, 
-        last_name: this.state.last_name, 
-        email: this.state.email, 
-        password: this.state.password,
-      })
-      .then((result) => {
-        this.props.history.push("/login")
-      });
-    }
+    // save the entry in database
+    axios.post('http://localhost:4000/user/signup', this.state)
+    .then((res) => {
+      console.log("Post response: ", res);
+      if(res.status === 201) {
+        this.setState(res.data);
+        console.log("State after response: ", this.state)
+      }
+      else {
+        this.props.history.push("/login");
+      }
+    });
   };
 
   render() {
