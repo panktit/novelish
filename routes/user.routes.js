@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user.model');
-var cookieParser = require('cookie-parser');
-router.use(cookieParser());
 
 // get all the users
 router.get('/', function(req, res, next) {

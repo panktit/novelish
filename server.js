@@ -3,10 +3,12 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 const PORT = 4000;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 mongoose.connect('mongodb://localhost/novelish', { useNewUrlParser: true, useUnifiedTopology: true });
 const connection = mongoose.connection;
@@ -20,6 +22,21 @@ const review = require('./routes/review.routes');
 
 app.use('/user', user);
 app.use('/review', review);
+
+app.get('/setcookie', function(req, res){
+  // setting cookies
+  res.cookie('about', 'Novelish: Online book uploading website', { maxAge: 10000, httpOnly: true });
+  return res.send('Cookie has been set');
+});
+
+app.get('/getcookie', function(req, res) {
+  var about = req.cookies['about'];
+  if (about) {
+    return res.send(about);
+  }   
+  return res.send('No cookie found');
+});
+
 
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile); 
