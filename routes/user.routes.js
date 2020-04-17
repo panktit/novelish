@@ -39,6 +39,7 @@ router.post('/login', (req, res) => {
         }); 
       } 
       else if (user.validPassword(req.body.password)) { 
+        // simply check (user.password === req.body.password)
         return res.json(user); 
       } 
       else { 
@@ -103,20 +104,5 @@ router.post('/signup', (req, res, next) => {
     res.status(201).json(user);
   }
 }); 
-
-
-router.get('/setcookie', function(req, res){
-  // setting cookies
-  res.cookie('about', 'Novelish: Online book uploading website', { maxAge: 10000, httpOnly: true });
-  return res.send('Cookie has been set');
-});
-
-router.get('/getcookie', function(req, res) {
-  var about = req.cookies['about'];
-  if (about) {
-    return res.send(about);        
-  }   
-  return res.send('No cookie found');
-});
 
 module.exports = router;

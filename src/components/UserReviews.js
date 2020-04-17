@@ -13,8 +13,8 @@ import {
   Container
 } from "reactstrap";
 let userId= "";
-class UserReviews extends React.Component {
 
+class UserReviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,12 +33,16 @@ class UserReviews extends React.Component {
     });
   }
 
-  delete(id){
+  delete(id) {
     console.log(id);
     axios.delete('http://localhost:4000/review/'+id)
       .then((result) => {
-        console.log("delete response: ",result);
-        this.props.history.push(`/myreviews/${userId}`);
+        console.log("delete response: ",result);        
+    })
+    axios.get(`http://localhost:4000/review/user/${userId}`)
+      .then(res => {
+        this.setState({ reviews: res.data });
+        console.log(this.state.reviews);
     });
   }
 
@@ -77,7 +81,7 @@ class UserReviews extends React.Component {
                           <button onClick={this.delete.bind(this, book._id)} className="btn btn-danger">Delete</button>
                         </td>
                     </tr>
-                        )}
+                    )}
                     </tbody>
                   </Table>
                 </CardBody>

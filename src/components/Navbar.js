@@ -10,7 +10,6 @@ import {
 } from 'reactstrap';
 
 const NavbarComponent = (props) => {
-  console.log("Navbar props: ", props);
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   return (
