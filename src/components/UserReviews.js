@@ -26,7 +26,7 @@ class UserReviews extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:4000/review/user/${userId}`)
+    axios.get(`http://localhost:4000/api/review/user/${userId}`)
       .then(res => {
         this.setState({ reviews: res.data });
         console.log(this.state.reviews);
@@ -35,15 +35,15 @@ class UserReviews extends React.Component {
 
   delete(id) {
     console.log(id);
-    axios.delete('http://localhost:4000/review/'+id)
+    axios.delete('http://localhost:4000/api/review/delete/'+id)
       .then((result) => {
-        console.log("delete response: ",result);        
+        console.log("delete response: ",result);
+        axios.get(`http://localhost:4000/api/review/user/${userId}`)
+          .then(res => {
+            this.setState({ reviews: res.data });
+            console.log(this.state.reviews);
+        });
     })
-    axios.get(`http://localhost:4000/review/user/${userId}`)
-      .then(res => {
-        this.setState({ reviews: res.data });
-        console.log(this.state.reviews);
-    });
   }
 
   render() {

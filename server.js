@@ -20,8 +20,9 @@ connection.once('open', function() {
 const user = require('./routes/user.routes');
 const review = require('./routes/review.routes');
 
-app.use('/user', user);
-app.use('/review', review);
+// for RESTful, use /api/user
+app.use('/api/user', user);
+app.use('/api/review', review);
 
 app.get('/setcookie', function(req, res){
   // setting cookies

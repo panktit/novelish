@@ -17,17 +17,17 @@ class AllReviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: []
+      reviews: []
     }
   }
   componentDidMount() {
     console.log("Props in Book Review: ", this.props);
     userId = this.props.match.params.id;
     console.log("UserId :",userId);
-    axios.get('http://localhost:4000/review/')
+    axios.get('http://localhost:4000/api/review/')
       .then(res => {
-        this.setState({ user: res.data });
-        console.log("User state in Book Review: " ,this.state.user);
+        this.setState({ reviews: res.data });
+        console.log("User state in Book Review: " ,this.state.reviews);
     });
   }
   render() {
@@ -52,7 +52,7 @@ class AllReviews extends React.Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {this.state.user.map(book =>
+                      {this.state.reviews.map(book =>
                         <tr>
                           <td style={{fontWeight: "bold"}}>{book.title}</td>
                           <td>{book.rating}</td>

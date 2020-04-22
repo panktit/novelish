@@ -22,7 +22,8 @@ class Edit extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/review/'+this.props.match.params.id)
+    // // For RESTful, use http://localhost:4000/api/review/edit/
+    axios.get('http://localhost:4000/api/review/'+this.props.match.params.id)
       .then(res => {
         this.setState({ book: res.data });
         console.log("Book in Edit: " ,this.state.book);
@@ -38,7 +39,7 @@ class Edit extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const { title, rating, review, user } = this.state.book;
-    axios.put('http://localhost:4000/review/'+this.props.match.params.id, { title, rating, review, user })
+    axios.put('http://localhost:4000/api/review/edit/'+this.props.match.params.id, { title, rating, review, user })
       .then((result) => {
         this.props.history.push("/myreviews/"+this.state.book.user);
     });

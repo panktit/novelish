@@ -27,7 +27,9 @@ router.get('/user/:id', function(req, res, next) {
 });
 
 /* SAVE BOOK REVIEW*/
-router.post('/', function(req, res, next) {
+
+// For RESTful, use /save or /new or /create
+router.post('/create', function(req, res, next) {
   Review.create(req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
@@ -35,7 +37,9 @@ router.post('/', function(req, res, next) {
 });
 
 /* UPDATE BOOK REVIEW*/
-router.put('/:id', function(req, res, next) {
+
+// For RESTful, use /edit/:id
+router.put('/edit/:id', function(req, res, next) {
   Review.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
@@ -43,7 +47,9 @@ router.put('/:id', function(req, res, next) {
 });
 
 /* DELETE BOOK REVIEW*/
-router.delete('/:id', function(req, res, next) {
+
+// For RESTful, use /delete/:id
+router.delete('/delete/:id', function(req, res, next) {
   Review.findByIdAndRemove(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);

@@ -42,7 +42,7 @@ class Signup extends React.Component {
     event.preventDefault();
     console.log(this.state);
     // save the entry in database
-    axios.post('http://localhost:4000/user/signup', this.state)
+    axios.post('http://localhost:4000/api/user/signup', this.state)
     .then((res) => {
       console.log("Post response: ", res);
       if(res.status === 201) {

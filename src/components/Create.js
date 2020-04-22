@@ -33,7 +33,7 @@ class Create extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:4000/review', {title: this.state.title, rating: this.state.rating, review: this.state.review, user:userId})
+    axios.post('http://localhost:4000/api/review/create', {title: this.state.title, rating: this.state.rating, review: this.state.review, user:userId})
       .then((res) => {
       this.props.history.push(`/myreviews/${userId}`);
     });

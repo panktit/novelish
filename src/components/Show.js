@@ -10,7 +10,7 @@ class Show extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/review/'+this.props.match.params.id)
+    axios.get('http://localhost:4000/api/review/'+this.props.match.params.id)
       .then(res => {
         this.setState({ book: res.data });
         console.log("Book in state: ",this.state.book);
@@ -19,7 +19,7 @@ class Show extends Component {
 
   delete(id){
     console.log(id);
-    axios.delete('http://localhost:4000/review/'+id)
+    axios.delete('http://localhost:4000/api/review/delete/'+id)
       .then((result) => {
         this.props.history.push(`/myreviews/${this.state.book.user}`);
     });
